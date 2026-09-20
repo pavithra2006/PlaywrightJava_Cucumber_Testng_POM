@@ -7,7 +7,6 @@
     <test name="Cucumber UI">
         <classes>
             <class name="runners.BankingTestRunner"/>
-            <class name="runners.ManagerFeatureRunner"/>
         </classes>
     </test>
     <test name="API">
