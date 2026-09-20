@@ -1,0 +1,33 @@
+name: Playwright Java tests
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+          cache: maven
+      - name: Install Chromium
+        run: mvn -q exec:java -Dexec.mainClass=com.microsoft.playwright.CLI -Dexec.args="install chromium"
+      - name: Run tests
+        run: mvn -B clean test -Dheadless=true -Drecord.video=true -Dreport.auto.open=false
+      - name: Upload reports and evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-test-results
+          path: |
+            test-results/
+            target/surefire-reports/
+          if-no-files-found: warn
+          retention-days: 14

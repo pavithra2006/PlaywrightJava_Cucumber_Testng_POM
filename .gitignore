@@ -1,4 +1,9 @@
 target/
+test-results/
+test-output/
+playwright-report/
+*.har
+*.zip
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
